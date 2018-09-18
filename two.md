@@ -23,47 +23,45 @@ def helan(arr,num):
 - 额外空间复杂度 O(logN)
 ### 经典快排
 ```
-def quick_sort(arr):
-    less=-1
-    more=len(arr)
-    curr=0
-    num=arr[-1]
-    while curr!=more:
-        if arr[curr]<num:
-            arr[less+1],arr[curr]=arr[curr],arr[less+1]
-            less+=1
-            curr+=1
-        elif arr[curr]>num:
-            arr[more-1],arr[curr]=arr[curr],arr[more-1]
-            more=more-1
-        else:
-            curr+=1
-    if curr==more:
-        return
-    quick_sort(arr[:less+1])
-    quick_sort(arr[more:])
+def sort(arr,l,r): 
+    if l<r:
+        less=l-1
+        curr=l
+        num=arr[-1]
+        while curr<=r:
+            if arr[curr] < num:
+                arr[less + 1], arr[curr] = arr[curr], arr[less + 1]
+                less += 1
+                curr += 1
+            else:
+                curr += 1
+        return less
+def quick_sort(arr,l,r):
+    if l<r:
+        p=sort(arr,l,r)
+        quick_sort(arr,l,p)
+        quick_sort(arr,p+1,r)
 ```
 ### 随机快排
 ```
 import random
-def quick_sort(arr):
-    less=-1
-    more=len(arr)
-    curr=0
-    num=
-    while curr!=more:
-        if arr[curr]<num:
-            arr[less+1],arr[curr]=arr[curr],arr[less+1]
-            less+=1
-            curr+=1
-        elif arr[curr]>num:
-            arr[more-1],arr[curr]=arr[curr],arr[more-1]
-            more=more-1
-        else:
-            curr+=1
-    if curr==more:
-        return
-    quick_sort(arr[:less+1])
-    quick_sort(arr[more:])
+def sort(arr,l,r):
+    if l<r:
+        less=l-1
+        curr=l
+        num=random.sample(arr,1)[0]
+        while curr<=r:
+            if arr[curr] < num:
+                arr[less + 1], arr[curr] = arr[curr], arr[less + 1]
+                less += 1
+                curr += 1
+            else:
+                curr += 1
+        return less
+def quick_random(arr,l,r):
+    if l<r:
+        p=sort(arr,l,r)
+        quick_random(arr,l,p)
+        quick_random(arr,p+1,r)
 ```
 
