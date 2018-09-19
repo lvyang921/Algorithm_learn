@@ -153,6 +153,25 @@ def heap_sort(arr):
         heapsize -= 1
 ```
 
+# 桶排序
+- 不基于比较的排序，基于词频率 
+- 时间复杂度N(N),空间复杂度N(N)
+## 计数排序
+- 生成相应长度序列记录频数
+```
+def count_sort(arr, k):  # k = max(a)
+    c = [0 for i in range(k + 1)]
+    for j in arr:
+        c[j] = c[j] + 1
+    write=0
+    for i in range(len(c)):
+        while c[i]!=0:
+            arr[write]=i
+            c[i]-=1
+            write+=1
+```
+
+
 # 其他
 ---
 ## 排序的稳定性
@@ -165,3 +184,41 @@ def heap_sort(arr):
 - 对于自定义类的实例或自定义数据进行比较可以自定义比较器对其中自定义内容进行比较
 - python中可通过sorted（）函数插入比较器
 - 堆结构也可以用比较器
+
+## 问题补充
+### Que2:给定一个数组，求如果排序之后，相邻两数的最大差值，要求时间复杂度O(N),且要求不能用基于比较的排序
+```
+def bucket(num,len,min,max):
+    return ((num-min)*len/(max-min))
+def maxgap(arr):
+    long=len(arr)
+    if long==None and long<2:
+        return 0
+    maxs=max(arr)
+    mins=min(arr)
+    if max==min:
+        return 0
+    boollist=[0 for i in range(long+1)]
+    maxlist=[0 for i in range(long+1)]
+    minlist=[0 for i in range(long+1)]
+    for i in range(long):
+        bid=bucket(arr[i],long,mins,maxs)
+        if boollist[bid]!=0:
+            if arr[i]<minlist[bid]:
+                minlist[bid]=arr[i]
+            if arr[i]>maxlist[bid]:
+                maxlist[bid]=arr[i]
+        else:
+            boollist[bid]=1
+            minlist[bid] = arr[i]
+            maxlist[bid] = arr[i]
+    res=0
+    lastmax=maxlist[0]
+    for i in range(1,long+1):
+        if boollist[i]!=0:
+            da=minlist[i]-lastmax
+            lastmax=maxlist[i]
+            if da>res:
+                res=da
+    return res
+```
